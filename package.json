@@ -12,7 +12,8 @@
     "lsq": "^1.0.0",
     "request": "^2.67.0",
     "toobusy-js": "^0.4.2",
-    "vision": "^4.0.1"
+    "vision": "^4.0.1",
+    "watson-developer-cloud": "^1.4.1"
   },
   "devDependencies": {},
   "scripts": {
