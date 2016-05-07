@@ -1,0 +1,30 @@
+{
+  "name": "node-micro-hapi-swagger",
+  "version": "1.0.0",
+  "description": "node micro hapi swagger service template",
+  "main": "app.js",
+  "dependencies": {
+    "boom": "^3.0.0",
+    "hapi": "^11.1.2",
+    "hapi-swagger": "^2.2.4",
+    "inert": "^3.2.0",
+    "joi": "^7.0.1",
+    "lsq": "^1.0.0",
+    "request": "^2.67.0",
+    "toobusy-js": "^0.4.2",
+    "vision": "^4.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "node",
+    "hapi",
+    "swagger",
+    "microservice"
+  ],
+  "author": "lsqio",
+  "license": "MIT"
+}

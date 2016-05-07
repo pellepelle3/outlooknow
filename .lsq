@@ -1,0 +1,5 @@
+{
+    "watch": "routes/*.js,app.js",
+    "isStartedWhen": "running",
+    "healthCheck": "/health"
+}
