@@ -63,9 +63,9 @@ function outlookRequest(options) {
        'client-request-id': guid(),
        'return-client-request-id': 'true',
        'X-Anchor-Mailbox': options.email },
-    auth: { bearer: options.token }
-    ,json: true,
-    qs: options.query })
+    auth: { bearer: options.token },
+    json: options.json || true,
+    qs: options.query || {} })
 }
 
 function guid() {

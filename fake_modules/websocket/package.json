@@ -1,0 +1,53 @@
+{
+  
+  "author": {
+    "email": "brian@worlize.com",
+    "name": "Brian McKelvey",
+    "url": "https://www.worlize.com/"
+  },
+  "browser": "lib/browser.js",
+  "bugs": {
+    "url": "https://github.com/theturtle32/WebSocket-Node/issues"
+  },
+  "config": {
+    "verbose": false
+  },
+  "contributors": [
+    {
+      "email": "ibc@aliax.net",
+      "name": "Iñaki Baz Castillo",
+      "url": "http://dev.sipdoc.net"
+    }
+  ],
+  "dependencies": {
+  },
+  "description": "Websocket Client & Server Library implementing the WebSocket protocol as specified in RFC 6455.",
+  "devDependencies": {
+    
+  },
+  "homepage": "https://github.com/theturtle32/WebSocket-Node",
+  "keywords": [
+    "websocket",
+    "websockets",
+    "socket",
+    "networking",
+    "comet",
+    "push",
+    "RFC-6455",
+    "realtime",
+    "server",
+    "client"
+  ],
+  "license": "Apache-2.0",
+  "main": "index",
+  "maintainers": [
+    {
+      "email": "brian@worlize.com",
+      "name": "theturtle32"
+    }
+  ],
+  "name": "websocket",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "version": "1.0.22"
+}

@@ -22,7 +22,7 @@
     "toobusy-js": "^0.5.0",
     "vision": "^4.1.0",
     "watson-developer-cloud": "^1.4.1",
-    "xhr-json": "^2.2.5"
+    "websocket":"file:./fake_modules/websocket"
   },
   "devDependencies": {},
   "scripts": {

@@ -52,7 +52,7 @@ Auth.home = (req, reply) => {
         <h1>Hello ${user.firstName} ${user.lastName}</h1>
         <h2>${user.email}</h2>
         <p>
-        ${hasConnector? '':'<a href="https://outlook.office.com/connectors/Connect?state=myAppsState&app_id=678d64a4-9d28-4563-bb7a-ae422f23d9ce&callback_url=http://localhost:8888/activities/connector"><img src="https://o365connectors.blob.core.windows.net/images/ConnectToO365Button.png" alt="Connect to Office 365"></img></a>'}
+        ${hasConnector? '':'<a href="https://outlook.office.com/connectors/Connect?state=myAppsState&app_id=678d64a4-9d28-4563-bb7a-ae422f23d9ce&callback_url=http://www.outlooknow.tech/activities/connector"><img src="https://o365connectors.blob.core.windows.net/images/ConnectToO365Button.png" alt="Connect to Office 365"></img></a>'}
         </p>
       </body>
     </html>

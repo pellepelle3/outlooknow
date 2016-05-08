@@ -1,18 +1,17 @@
 'use strict'
 const Boom = require('boom') 
 const Promise = require('promise')
-const XhrJson = require('xhr-json')
 const Request = require('request-promise')
 const db = require('./db')
 const outlook = require('node-outlook')
 let Activities = {}
 
 module.exports = Activities
+
 Activities.readEmails = (req, reply) => {
   let queryParams = {
-    // '$select': 'Subject,ReceivedDateTime,From',
     '$orderby': 'ReceivedDateTime desc',
-    '$top': 10
+    '$top': 50
   }
 
   let options = {
@@ -22,12 +21,17 @@ Activities.readEmails = (req, reply) => {
     token: req.auth.credentials.authData.token,
     query: queryParams
   }
-return db.outlookRequest(options)
-.then(res=>reply(res))
-.catch(e=>reply(e))
 
-
-
+  return db.outlookRequest(options)
+  .then(res=>{
+    let messages = res.value
+    reply(messages)
+    markAllAsProcessed(messages, options.email, options.token)
+  })
+  .catch(e=>{
+    console.log(e)
+    reply(e)
+  })
 }
 
 Activities.connector = (req,reply) => {
@@ -37,7 +41,6 @@ Activities.connector = (req,reply) => {
 }
 
 Activities.sendConnectorMessage = (req,reply) => {
-  console.log(req.payload.message)
   return findConnectorByUserId(req.auth.credentials.id)
     .then(connector => Request({url:connector.connectorUrl, method:'POST', json:req.payload.message}))
     .then(data=>reply(data))
@@ -48,6 +51,24 @@ Activities.sendConnectorMessage = (req,reply) => {
 
 }
 
+function markAllAsProcessed (messages, email, token){
+  return messages.map(message=>markAsProcessed(message, email, token))
+}
+
+function markAsProcessed (message, email, token) {
+  if (typeof message !== "object" ) return
+  if (message.Categories.indexOf('Processed by Now') !== -1) return
+  message.Categories.push('Processed by Now')
+   let options = {
+    method: 'PATCH',
+    path: `messages/${message.Id}`,
+    email: email,
+    token: token,
+    json: {'Categories':message.Categories }
+  }
+
+  return db.outlookRequest(options)
+}
 
 function findConnectorByWebhook(webhook) {
   return db.pg.one('SELECT id FROM outlook_connectors WHERE connector_url = ${webhook}', { webhook })
