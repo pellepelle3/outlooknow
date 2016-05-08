@@ -11,7 +11,7 @@ Auth.office = (req, reply) => {
 
   return userFindByEmail(req.auth.credentials.profile.email)
     .then(user=>{
-      return user
+      return userUpdateAuthData(user.id, req.auth.credentials)
     },e => {
       let name = req.auth.credentials.profile.displayName.split(' ')
       let user = { 
@@ -26,7 +26,7 @@ Auth.office = (req, reply) => {
       return userCreate(user)
     })
     .done(user=>{
-      const sid = guid()
+      const sid = db.guid()
       return req.server.app.cache.set(sid, { account: user }, 0, (err) => {
         if (err) console.error(err)
         req.cookieAuth.set({ sid: sid })
@@ -42,15 +42,21 @@ Auth.login = (req, reply) => {
 
 Auth.home = (req, reply) => {
   let user = req.auth.credentials
-  return reply(`
+  let hasConnector
+  return findConnectorByUserId(user.id)
+  .then(()=>hasConnector=true,()=>hasConnector=false)
+  .done(()=>reply(`
     <html>
       <body>
         <a href='/logout'>logout</a>
         <h1>Hello ${user.firstName} ${user.lastName}</h1>
         <h2>${user.email}</h2>
+        <p>
+        ${hasConnector? '':'<a href="https://outlook.office.com/connectors/Connect?state=myAppsState&app_id=678d64a4-9d28-4563-bb7a-ae422f23d9ce&callback_url=http://localhost:8888/activities/connector"><img src="https://o365connectors.blob.core.windows.net/images/ConnectToO365Button.png" alt="Connect to Office 365"></img></a>'}
+        </p>
       </body>
     </html>
-  `)
+  `))
 }
 
 Auth.logout = (req, reply) => {
@@ -63,17 +69,16 @@ function userFindByEmail(email) {
     .then(userAccount => db.underscoreToCamel(userAccount))
 }
 
-function userCreate(user) {
-  return db.pg.one('INSERT INTO users (email, first_name, last_name, phone_number, note, auth_method, auth_data) VALUES ( ${email}, ${first_name}, ${last_name}, ${phone_number}, ${note}, ${auth_method}, ${auth_data}) RETURNING id, email, first_name , last_name, phone_number, created_on, note, auth_method, auth_data', db.camelToUnderscore(user))
+function findConnectorByUserId(id) {
+  return db.pg.one('SELECT id FROM outlook_connectors WHERE user_id = ${id}', { id })
+}
+
+function userUpdateAuthData(userId,authData) {
+   return db.pg.one('UPDATE users SET auth_data = ${auth_data} WHERE id = ${id} RETURNING id, email, first_name , last_name, phone_number, created_on, note, auth_method, auth_data', db.camelToUnderscore({id:userId,authData}))
   .then(userAccount => db.underscoreToCamel(userAccount))
 }
 
-function guid() {
-  function s4() {
-    return Math.floor((1 + Math.random()) * 0x10000)
-      .toString(16)
-      .substring(1);
-  }
-  return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-    s4() + '-' + s4() + s4() + s4();
+function userCreate(user) {
+  return db.pg.one('INSERT INTO users (email, first_name, last_name, phone_number, note, auth_method, auth_data) VALUES ( ${email}, ${first_name}, ${last_name}, ${phone_number}, ${note}, ${auth_method}, ${auth_data}) RETURNING id, email, first_name , last_name, phone_number, created_on, note, auth_method, auth_data', db.camelToUnderscore(user))
+  .then(userAccount => db.underscoreToCamel(userAccount))
 }

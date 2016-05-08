@@ -8,29 +8,18 @@ lsq.config.get()
     config = c
   })
 
-
 routes.push({
-  method: 'GET',
-  path: '/_config/',
-  config:{
-    description: 'Get config',
-    tags: ['api','lsq','config'],
-    handler: function (request, reply) {
-      reply(config)
-    }
-  }
-})
-
-routes.push({
-  method: 'GET',
-  path: '/api/hello/',
-  config:{
-    description: 'Hello World',
-    tags: ['api','lsq','hello'],
-    handler: function (request, reply) {
-      reply('Hello World!')
-    }
-  }
-})
+      method: 'GET',
+      path: '/{param*}',
+      config:{
+        auth:false
+      },
+      handler: {
+          directory: {
+              path: 'public',
+              listing: true
+          }
+      }
+  })
 
 module.exports = routes

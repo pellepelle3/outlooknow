@@ -4,7 +4,7 @@ let Joi = require('joi')
 let api = require('../api')
 
 routes.push({
-  method: '*',
+  method: 'GET',
   path: '/auth/office',
   config: {
     auth: 'office365',

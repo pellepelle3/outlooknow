@@ -14,8 +14,7 @@ let Relish = require('relish')({ stripQuotes: true })
 let Config
 let server
 let swaggerOptions = {
-  documentationPath: '/'
-  ,info: {
+  info: {
     title: pack.name,
     description: pack.description
   }
@@ -88,7 +87,7 @@ LSQ.config.get()
         providerParams: {
           response_type: 'code'
         },
-        scope: ['openid','https://outlook.office.com/mail.read', 'offline_access','profile','email'],
+        scope: ['openid','https://outlook.office.com/mail.readwrite' , 'offline_access','profile','email'],
         isSecure: false
   })
    return 
