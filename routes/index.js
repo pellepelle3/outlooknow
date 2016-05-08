@@ -2,6 +2,8 @@
 var routes = []
 var _routes = [
 	require('./health'),
+  require('./user'),
+  require('./auth'),
 	require('./api')
 ]
 
