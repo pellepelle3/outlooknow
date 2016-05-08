@@ -39,7 +39,7 @@ Activities.connector = (req,reply) => {
 Activities.sendConnectorMessage = (req,reply) => {
   console.log(req.payload.message)
   return findConnectorByUserId(req.auth.credentials.id)
-    .then(connector => XhrJson({url:connector.connectorUrl, method:'POST', data:req.payload.message}))
+    .then(connector => Request({url:connector.connectorUrl, method:'POST', json:req.payload.message}))
     .then(data=>reply(data))
     .catch(e=>{
       console.log(e)
