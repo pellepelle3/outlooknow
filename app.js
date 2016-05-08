@@ -14,10 +14,7 @@ let Relish = require('relish')({ stripQuotes: true })
 let Config
 let server
 let swaggerOptions = {
-  apiVersion: pack.version
-  ,documentationPath: '/'
-  ,enableDocumentationPage: true
-  ,endpoint:'/_docs'
+  documentationPath: '/'
   ,info: {
     title: pack.name,
     description: pack.description
@@ -69,16 +66,30 @@ LSQ.config.get()
   })
 
   server.app.cache = cache
+  server.auth.strategy('session', 'cookie', true, {
+    password: Config.redis.pass,
+    cookie: 'session',
+    redirectTo: '/login',
+    isSecure: false,
+    validateFunc: function (request, session, callback) {
+      cache.get(session.sid, (err, cached) => {
+        if (err) throw err
+        if (!cached) return callback(null, false)
+        return callback(null, true, cached.account)
+      })
+    }
+  })
 
-  server.auth.strategy('office', 'bell', {
+  server.auth.strategy('office365', 'bell', {
         provider: 'office365',
-        clientId: Config.officeApp.clientId,
-        clientSecret: Config.officeApp.clientSecret,
-        password:Config.redis.pass,
+        clientId: Config.outlookApp1.clientId,
+        clientSecret: Config.outlookApp1.clientSecret,
+        password: Config.redis.pass,
         providerParams: {
-            response_type: 'code'
+          response_type: 'code'
         },
-        scope: ['https://outlook.office.com/mail.read']
+        scope: ['openid','https://outlook.office.com/mail.read', 'offline_access','profile','email'],
+        isSecure: false
   })
    return 
 })

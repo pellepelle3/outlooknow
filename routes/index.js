@@ -4,7 +4,8 @@ var _routes = [
 	require('./health'),
   require('./user'),
   require('./auth'),
-	require('./api')
+	require('./api'),
+	require('./activities')
 ]
 
 _routes.forEach(function(_route) {

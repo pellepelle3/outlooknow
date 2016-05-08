@@ -7,6 +7,7 @@ routes.push({
   method: 'GET',
   path: '/health',
   config:{
+    auth:false,
     description: 'Health Check',
     tags: ['api','lsq','Health'],
     handler: function (request, reply) {
