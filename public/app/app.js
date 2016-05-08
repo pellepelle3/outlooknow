@@ -13,6 +13,7 @@ class App extends Component {
 		return(
 			<article>				
 				<Header/>
+				{React.cloneElement(this.props.children)}
 				<Footer/>				
 			</article>
 		)

@@ -22,4 +22,43 @@ routes.push({
       }
   })
 
+routes.push({
+      method: 'GET',
+      path: '/',
+      config:{
+        auth:false
+      },
+      handler: {
+          file: {
+              path: 'public/index.html'
+          }
+      }
+  })
+
+routes.push({
+      method: 'GET',
+      path: '/home',
+      config:{
+        auth:false
+      },
+      handler: {
+          file: {
+              path: 'public/index.html'
+          }
+      }
+  })
+
+routes.push({
+      method: 'GET',
+      path: '/login',
+      config:{
+        auth:false
+      },
+      handler: {
+          file: {
+              path: 'public/index.html'
+          }
+      }
+  })
+
 module.exports = routes

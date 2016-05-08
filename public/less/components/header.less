@@ -2,5 +2,31 @@
 @import '../inc/mixins.less';
 
 header {
+	border-bottom: 1px solid #efefef;
+	height: 50px;
+	width: 100%;
+	display: block;	
+	position: relative;
 	
+	.logo{
+		position: absolute;
+		top: 9px;
+		left: 10px;
+
+		height: 41px;
+		width: 164px;		
+		background: url("/img/logo.png") no-repeat;
+		-webkit-background-size: contain;
+		-moz-background-size: contain;
+		-o-background-size: contain;
+		background-size: contain;
+		text-indent: -9999em;
+		overflow: hidden;
+	}
+
+	a{
+		position: absolute;
+		top: 9px;
+		right: 10px;
+	}
 }

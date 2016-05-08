@@ -36,7 +36,6 @@ Auth.office = (req, reply) => {
 }
 
 Auth.login = (req, reply) => {
-
   return reply("<html><body><a href='/auth/office'>Login to office</a></body></html>")
 }
 
@@ -45,18 +44,14 @@ Auth.home = (req, reply) => {
   let hasConnector
   return findConnectorByUserId(user.id)
   .then(()=>hasConnector=true,()=>hasConnector=false)
-  .done(()=>reply(`
-    <html>
-      <body>
-        <a href='/logout'>logout</a>
-        <h1>Hello ${user.firstName} ${user.lastName}</h1>
-        <h2>${user.email}</h2>
-        <p>
-        ${hasConnector? '':'<a href="https://outlook.office.com/connectors/Connect?state=myAppsState&app_id=678d64a4-9d28-4563-bb7a-ae422f23d9ce&callback_url=http://localhost:8888/activities/connector"><img src="https://o365connectors.blob.core.windows.net/images/ConnectToO365Button.png" alt="Connect to Office 365"></img></a>'}
-        </p>
-      </body>
-    </html>
-  `))
+  .done(()=>reply(
+    {
+      first_name: user.firstName,
+      last_name: user.lastName,
+      email: user.email,
+      hasConnector: hasConnector
+    }
+  ))
 }
 
 Auth.logout = (req, reply) => {

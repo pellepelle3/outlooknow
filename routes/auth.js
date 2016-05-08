@@ -17,18 +17,7 @@ routes.push({
 
 routes.push({
   method: 'GET',
-  path: '/login',
-  config: {
-    auth: false,
-    description: "login",
-    handler: api.auth.login,
-    tags: ['api']
-  }
-})
-
-routes.push({
-  method: 'GET',
-  path: '/home',
+  path: '/auth/user',
   config: {
     description: "home",
     handler: api.auth.home,

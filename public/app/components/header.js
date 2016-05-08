@@ -9,8 +9,8 @@ class Header extends Component {
   render() {
 	return (
 	  <header id="main-header">		
-		<div className="logo-area">Outlook now logo</div>        
-		<a>Connect</a>
+		<div className="logo">Outlook now logo</div>		
+		<a className="cta">Connect</a>
 	  </header>
 	)
   }

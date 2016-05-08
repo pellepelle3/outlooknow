@@ -5,6 +5,7 @@ import { createHistory, createHashHistory, useBasename } from 'history'
 
 import App from './app'
 import Landing from './containers/landing'
+import Home from './containers/home'
 import NotFound from './containers/notfound'
 
 const history = useRouterHistory(createHistory)({
@@ -14,6 +15,7 @@ const history = useRouterHistory(createHistory)({
 const routes = (
 	<Route component={App} path="/">
 		<IndexRoute component={Landing} />
+		<Route path="home" component={Home} />
 		<Route path="*" component={NotFound} />
 	</Route>
 )
